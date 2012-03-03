@@ -2,7 +2,7 @@ package me.Kruithne.KruGeneration;
 
 public class StraightRoad
 {
-	public byte GetByte(int x, int y, int z, boolean rotate)
+	public byte getByte(int x, int y, int z, boolean rotate)
 	{
 		if(rotate)
 			return byteMap[blockData[x + z*16 + y*256]];

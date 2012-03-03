@@ -2,7 +2,7 @@ package me.Kruithne.KruGeneration;
 
 public class CrossRoads
 {
-	public byte GetByte(int x, int y, int z)
+	public byte getByte(int x, int y, int z)
 	{
 		return byteMap[blockData[x*16 + z + y*256]];
 	}

@@ -41,10 +41,10 @@ public class KruGenerationGenerator extends ChunkGenerator
 					{
 						byte what = 0;
 						if(hRoad && vRoad)
-							what = intersect.GetByte(x, y, z);
+							what = intersect.getByte(x, y, z);
 
 						else
-							what = straight.GetByte(x, y, z, hRoad);
+							what = straight.getByte(x, y, z, hRoad);
 
 						result[offset + 62 + y] = what;
 					}
