@@ -1,0 +1,5 @@
+name: PlotGenerator
+main: no.runsafe.worldgenerator.Plugin
+load: STARTUP
+authors: [Kruithne, mortenn]
+version: 2.0.@BUILD@
