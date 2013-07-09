@@ -4,12 +4,9 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.RunsafeWorld;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
@@ -21,46 +18,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 
 	public enum Mode
 	{
-		NORMAL, FLAT, VOID, DEFAULT
-	}
-
-	public enum Biome
-	{
-		Swamp(org.bukkit.block.Biome.SWAMPLAND),
-		Forest(org.bukkit.block.Biome.FOREST),
-		Taiga(org.bukkit.block.Biome.TAIGA),
-		Desert(org.bukkit.block.Biome.DESERT),
-		Plains(org.bukkit.block.Biome.PLAINS),
-		Hell(org.bukkit.block.Biome.HELL),
-		Sky(org.bukkit.block.Biome.SKY),
-		Ocean(org.bukkit.block.Biome.OCEAN),
-		River(org.bukkit.block.Biome.RIVER),
-		ExtremeHills(org.bukkit.block.Biome.EXTREME_HILLS),
-		FrozenOcean(org.bukkit.block.Biome.FROZEN_OCEAN),
-		FrozenRiver(org.bukkit.block.Biome.FROZEN_RIVER),
-		IcePlains(org.bukkit.block.Biome.ICE_PLAINS),
-		IceMountains(org.bukkit.block.Biome.ICE_MOUNTAINS),
-		MushroomIsland(org.bukkit.block.Biome.MUSHROOM_ISLAND),
-		MushroomShore(org.bukkit.block.Biome.MUSHROOM_SHORE),
-		Beach(org.bukkit.block.Biome.BEACH),
-		DesertHills(org.bukkit.block.Biome.DESERT_HILLS),
-		ForestHills(org.bukkit.block.Biome.FOREST_HILLS),
-		TaigaHills(org.bukkit.block.Biome.TAIGA_HILLS),
-		SmallMountains(org.bukkit.block.Biome.SMALL_MOUNTAINS),
-		Jungle(org.bukkit.block.Biome.JUNGLE),
-		JungleHills(org.bukkit.block.Biome.JUNGLE_HILLS);
-
-		Biome(org.bukkit.block.Biome bukkitBiome)
-		{
-			this.biome = bukkitBiome;
-		}
-
-		org.bukkit.block.Biome getRaw()
-		{
-			return biome;
-		}
-
-		private final org.bukkit.block.Biome biome;
+		NORMAL, FLAT, VOID
 	}
 
 	public PlotChunkGenerator()
@@ -75,11 +33,6 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 		mode = generatorMode;
 	}
 
-	public void setBiome(Biome biome)
-	{
-		biomeOverride = biome;
-	}
-
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
@@ -91,16 +44,6 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	{
 		byte[] result = null;
 
-		if (biomeOverride != null)
-		{
-			Chunk chunk = world.getChunkAt(cx, cz);
-			for (int x = 0; x < 16; ++x)
-				for (int z = 0; z < 16; ++z)
-				{
-					Block block = chunk.getBlock(x, 1, z);
-					world.setBiome(block.getX(), block.getZ(), biomeOverride.getRaw());
-				}
-		}
 		switch (mode)
 		{
 			case NORMAL:
@@ -112,24 +55,6 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 			case VOID:
 				result = VoidGenerator();
 				break;
-			case DEFAULT:
-				if (dummy == null)
-				{
-					RunsafeServer.Instance.getDebugger().logError("Dummy world is null!");
-					return null;
-				}
-				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
-				if (!chunk.isLoaded())
-					chunk.load(false);
-				chunk.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
-
-				byte[][] blocks = new byte[8][4096];
-				for (int x = 0; x < 16; ++x)
-					for (int y = 0; y < 128; ++y)
-						for (int z = 0; z < 16; ++z)
-							blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (byte) chunk.getBlock(x, y, z).getType().getId();
-
-				return blocks;
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -216,6 +141,5 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	private StraightRoad straight;
 	private CrossRoads intersect;
 	private Mode mode;
-	private Biome biomeOverride = null;
 	private RunsafeWorld dummy;
 }

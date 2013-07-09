@@ -1,9 +1,9 @@
 package no.runsafe.worldgenerator;
 
-import no.runsafe.framework.RunsafeConfigurablePlugin;
+import no.runsafe.framework.RunsafePlugin;
 import org.bukkit.generator.ChunkGenerator;
 
-public class Plugin extends RunsafeConfigurablePlugin
+public class Plugin extends RunsafePlugin
 {
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id)
 	{
