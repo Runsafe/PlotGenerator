@@ -1,15 +1,22 @@
 package no.runsafe.worldgenerator;
 
+import net.minecraft.server.v1_6_R1.ChunkProviderGenerate;
+import net.minecraft.server.v1_6_R1.IChunkProvider;
+import net.minecraft.server.v1_6_R1.WorldGenerator;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeServer;
+import no.runsafe.framework.minecraft.RunsafeWorld;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class PlotChunkGenerator extends ChunkGenerator
+public class PlotChunkGenerator extends ChunkGenerator implements IConfigurationChanged
 {
 	final static int PLOT_SIZE = 3;
 
@@ -75,6 +82,12 @@ public class PlotChunkGenerator extends ChunkGenerator
 	}
 
 	@Override
+	public void OnConfigurationChanged(IConfiguration configuration)
+	{
+		dummy = RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("dummyWorld"));
+	}
+
+	@Override
 	public byte[][] generateBlockSections(World world, Random random, int cx, int cz, BiomeGrid biomes)
 	{
 		byte[] result = null;
@@ -91,10 +104,9 @@ public class PlotChunkGenerator extends ChunkGenerator
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
-				if (biomeOverride == null)
-					return RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, biomes);
-				else
-					return RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
+				if(biomeOverride != null)
+					biomes = new BiomeSupplier(biomeOverride.getRaw());
+				return dummy.getRaw().getGenerator().generateBlockSections(dummy.getRaw(), random, cx, cz, biomes);
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -182,4 +194,5 @@ public class PlotChunkGenerator extends ChunkGenerator
 	private CrossRoads intersect;
 	private Mode mode;
 	private Biome biomeOverride = null;
+	private RunsafeWorld dummy;
 }
