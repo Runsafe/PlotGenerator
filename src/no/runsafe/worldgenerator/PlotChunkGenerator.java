@@ -12,9 +12,53 @@ public class PlotChunkGenerator extends ChunkGenerator
 {
 	final static int PLOT_SIZE = 3;
 
+	public void setDefaultGenerator(ChunkGenerator generator)
+	{
+		defaultGenerator = generator;
+	}
+
 	public enum Mode
 	{
-		NORMAL, FLAT, VOID
+		NORMAL, FLAT, VOID, DEFAULT
+	}
+
+	public enum Biome
+	{
+		Swamp(org.bukkit.block.Biome.SWAMPLAND),
+		Forest(org.bukkit.block.Biome.FOREST),
+		Taiga(org.bukkit.block.Biome.TAIGA),
+		Desert(org.bukkit.block.Biome.DESERT),
+		Plains(org.bukkit.block.Biome.PLAINS),
+		Hell(org.bukkit.block.Biome.HELL),
+		Sky(org.bukkit.block.Biome.SKY),
+		Ocean(org.bukkit.block.Biome.OCEAN),
+		River(org.bukkit.block.Biome.RIVER),
+		ExtremeHills(org.bukkit.block.Biome.EXTREME_HILLS),
+		FrozenOcean(org.bukkit.block.Biome.FROZEN_OCEAN),
+		FrozenRiver(org.bukkit.block.Biome.FROZEN_RIVER),
+		IcePlains(org.bukkit.block.Biome.ICE_PLAINS),
+		IceMountains(org.bukkit.block.Biome.ICE_MOUNTAINS),
+		MushroomIsland(org.bukkit.block.Biome.MUSHROOM_ISLAND),
+		MushroomShore(org.bukkit.block.Biome.MUSHROOM_SHORE),
+		Beach(org.bukkit.block.Biome.BEACH),
+		DesertHills(org.bukkit.block.Biome.DESERT_HILLS),
+		ForestHills(org.bukkit.block.Biome.FOREST_HILLS),
+		TaigaHills(org.bukkit.block.Biome.TAIGA_HILLS),
+		SmallMountains(org.bukkit.block.Biome.SMALL_MOUNTAINS),
+		Jungle(org.bukkit.block.Biome.JUNGLE),
+		JungleHills(org.bukkit.block.Biome.JUNGLE_HILLS);
+
+		Biome(org.bukkit.block.Biome bukkitBiome)
+		{
+			this.biome = bukkitBiome;
+		}
+
+		org.bukkit.block.Biome getRaw()
+		{
+			return biome;
+		}
+
+		private final org.bukkit.block.Biome biome;
 	}
 
 	public PlotChunkGenerator()
@@ -27,6 +71,11 @@ public class PlotChunkGenerator extends ChunkGenerator
 	public void setMode(Mode generatorMode)
 	{
 		mode = generatorMode;
+	}
+
+	public void setBiome(Biome biome)
+	{
+		biomeOverride = biome;
 	}
 
 	@Override
@@ -45,6 +94,11 @@ public class PlotChunkGenerator extends ChunkGenerator
 			case VOID:
 				result = VoidGenerator();
 				break;
+			case DEFAULT:
+				if (biomeOverride == null)
+					return DefaultGenerator(world, random, cx, cz, biomes);
+				else
+					return DefaultGenerator(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -54,6 +108,11 @@ public class PlotChunkGenerator extends ChunkGenerator
 					chunk[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = result[(x * 16 + z) * 128 + y];
 
 		return chunk;
+	}
+
+	private byte[][] DefaultGenerator(World world, Random random, int x, int z, BiomeGrid biomes)
+	{
+		return defaultGenerator.generateBlockSections(world, random, x, z, biomes);
 	}
 
 	private byte[] VoidGenerator()
@@ -131,4 +190,6 @@ public class PlotChunkGenerator extends ChunkGenerator
 	private StraightRoad straight;
 	private CrossRoads intersect;
 	private Mode mode;
+	private ChunkGenerator defaultGenerator;
+	private Biome biomeOverride = null;
 }
