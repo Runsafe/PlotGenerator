@@ -109,7 +109,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 				}
 				if(biomeOverride != null)
 					biomes = new BiomeSupplier(biomeOverride.getRaw());
-				return dummy.getRaw().getGenerator().generateBlockSections(dummy.getRaw(), random, cx, cz, biomes);
+				return dummy.getRaw().getGenerator().generateBlockSections(dummy.getRaw(), new Random(), cx, cz, biomes);
 //				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
 //				if (!chunk.isLoaded())
 //					chunk.load(false);
