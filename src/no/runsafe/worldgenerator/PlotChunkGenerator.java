@@ -1,11 +1,9 @@
 package no.runsafe.worldgenerator;
 
+import no.runsafe.framework.minecraft.RunsafeServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R1.generator.CustomChunkGenerator;
-import org.bukkit.craftbukkit.v1_6_R1.generator.NormalChunkGenerator;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
@@ -93,12 +91,10 @@ public class PlotChunkGenerator extends ChunkGenerator
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
-				ChunkGenerator generator = new CustomChunkGenerator(((CraftWorld) world).getHandle(), world.getSeed(), new NormalChunkGenerator(((CraftWorld) world).getHandle(), world.getSeed()));
-				//NormalChunkGenerator generator = new NormalChunkGenerator(((CraftWorld) world).getHandle(), world.getSeed());
 				if (biomeOverride == null)
-					return generator.generateBlockSections(world, random, cx, cz, biomes);
+					RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, biomes);
 				else
-					return generator.generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
+					RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
 		}
 
 		byte[][] chunk = new byte[8][4096];
