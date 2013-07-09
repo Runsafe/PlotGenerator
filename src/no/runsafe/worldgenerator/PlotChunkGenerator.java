@@ -81,8 +81,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
-		if (configuration.getConfigValueAsString("dummyWorld") != null)
-			dummy = RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("dummyWorld"));
+		dummy = RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("dummyWorld"));
 	}
 
 	@Override
@@ -102,6 +101,11 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
+				if(dummy == null)
+				{
+					RunsafeServer.Instance.getDebugger().logError("Dummy world is null!");
+					return null;
+				}
 				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
 				if(!chunk.isLoaded())
 					chunk.load(false);
