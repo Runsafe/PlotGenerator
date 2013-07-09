@@ -92,9 +92,9 @@ public class PlotChunkGenerator extends ChunkGenerator
 				break;
 			case DEFAULT:
 				if (biomeOverride == null)
-					RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, biomes);
+					return RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, biomes);
 				else
-					RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
+					return RunsafeServer.Instance.getWorld("world").getRaw().getGenerator().generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
 		}
 
 		byte[][] chunk = new byte[8][4096];
