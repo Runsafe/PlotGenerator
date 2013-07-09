@@ -81,9 +81,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
-		String dummyWorld = configuration.getConfigValueAsString("dummyWorld");
-		if (dummyWorld != null)
-			dummy = RunsafeServer.Instance.getWorld(dummyWorld);
+		dummy = RunsafeServer.Instance.getWorld("dummy");
 	}
 
 	@Override
