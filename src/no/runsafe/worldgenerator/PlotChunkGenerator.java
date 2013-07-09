@@ -3,7 +3,7 @@ package no.runsafe.worldgenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_5_R3.generator.NormalChunkGenerator;
+import org.bukkit.craftbukkit.v1_6_R1.generator.NormalChunkGenerator;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
@@ -91,7 +91,7 @@ public class PlotChunkGenerator extends ChunkGenerator
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
-				NormalChunkGenerator generator = new NormalChunkGenerator((net.minecraft.server.v1_5_R3.World) world, world.getSeed());
+				NormalChunkGenerator generator = new NormalChunkGenerator((net.minecraft.server.v1_6_R1.World) world, world.getSeed());
 				if (biomeOverride == null)
 					return generator.generateBlockSections(world, random, cx, cz, biomes);
 				else
