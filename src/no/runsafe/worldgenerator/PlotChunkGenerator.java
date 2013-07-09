@@ -102,6 +102,8 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
+				if (!dummy.getRaw().isChunkLoaded(cx, cz))
+					dummy.getRaw().loadChunk(cx, cz);
 				dummy.getRaw().regenerateChunk(cx, cz);
 				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
 				byte[][] blocks = new byte[8][4096];
