@@ -19,6 +19,7 @@
 
     <target name="injectVersion">
         <copy file="${src.dir}/plugin.yml" todir="${build.dir}"/>
+        <copy file="${src.dir}/defaults.yml" todir="${build.dir}"/>
         <replaceregexp file="${build.dir}/plugin.yml" match="@BUILD@" replace="${build.number}"/>
     </target>
 
