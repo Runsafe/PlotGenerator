@@ -107,27 +107,29 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 					RunsafeServer.Instance.getDebugger().logError("Dummy world is null!");
 					return null;
 				}
-
-				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
-				if (!chunk.isLoaded())
-					chunk.load(false);
-				if (biomeOverride != null)
-					for (int x = 0; x < 16; ++x)
-						for (int z = 0; z < 16; ++z)
-						{
-							Block block = chunk.getBlock(x, 1, z);
-							chunk.getWorld().setBiome(block.getX(), block.getZ(), biomeOverride.getRaw());
-						}
-
-				chunk.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
-
-				byte[][] blocks = new byte[8][4096];
-				for (int x = 0; x < 16; ++x)
-					for (int y = 0; y < 128; ++y)
-						for (int z = 0; z < 16; ++z)
-							blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (byte) chunk.getBlock(x, y, z).getType().getId();
-
-				return blocks;
+				if(biomeOverride != null)
+					biomes = new BiomeSupplier(biomeOverride.getRaw());
+				return dummy.getRaw().getGenerator().generateBlockSections(dummy.getRaw(), random, cx, cz, biomes);
+//				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
+//				if (!chunk.isLoaded())
+//					chunk.load(false);
+//				if (biomeOverride != null)
+//					for (int x = 0; x < 16; ++x)
+//						for (int z = 0; z < 16; ++z)
+//						{
+//							Block block = chunk.getBlock(x, 1, z);
+//							chunk.getWorld().setBiome(block.getX(), block.getZ(), biomeOverride.getRaw());
+//						}
+//
+//				chunk.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
+//
+//				byte[][] blocks = new byte[8][4096];
+//				for (int x = 0; x < 16; ++x)
+//					for (int y = 0; y < 128; ++y)
+//						for (int z = 0; z < 16; ++z)
+//							blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (byte) chunk.getBlock(x, y, z).getType().getId();
+//
+//				return blocks;
 		}
 
 		byte[][] chunk = new byte[8][4096];
