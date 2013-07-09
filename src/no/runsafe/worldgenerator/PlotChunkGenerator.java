@@ -1,8 +1,5 @@
 package no.runsafe.worldgenerator;
 
-import net.minecraft.server.v1_6_R1.ChunkProviderGenerate;
-import net.minecraft.server.v1_6_R1.IChunkProvider;
-import net.minecraft.server.v1_6_R1.WorldGenerator;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeServer;
@@ -11,7 +8,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
@@ -85,7 +81,8 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
-		dummy = RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("dummyWorld"));
+		if (configuration.getConfigValueAsString("dummyWorld") != null)
+			dummy = RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("dummyWorld"));
 	}
 
 	@Override
