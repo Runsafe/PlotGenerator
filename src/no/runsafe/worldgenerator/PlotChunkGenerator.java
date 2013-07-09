@@ -3,6 +3,7 @@ package no.runsafe.worldgenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_5_R3.generator.NormalChunkGenerator;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
@@ -11,11 +12,6 @@ import java.util.Random;
 public class PlotChunkGenerator extends ChunkGenerator
 {
 	final static int PLOT_SIZE = 3;
-
-	public void setDefaultGenerator(ChunkGenerator generator)
-	{
-		defaultGenerator = generator;
-	}
 
 	public enum Mode
 	{
@@ -95,10 +91,11 @@ public class PlotChunkGenerator extends ChunkGenerator
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
+				NormalChunkGenerator generator = new NormalChunkGenerator((net.minecraft.server.v1_5_R3.World) world, world.getSeed());
 				if (biomeOverride == null)
-					return DefaultGenerator(world, random, cx, cz, biomes);
+					return generator.generateBlockSections(world, random, cx, cz, biomes);
 				else
-					return DefaultGenerator(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
+					return generator.generateBlockSections(world, random, cx, cz, new BiomeSupplier(biomeOverride.getRaw()));
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -108,11 +105,6 @@ public class PlotChunkGenerator extends ChunkGenerator
 					chunk[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = result[(x * 16 + z) * 128 + y];
 
 		return chunk;
-	}
-
-	private byte[][] DefaultGenerator(World world, Random random, int x, int z, BiomeGrid biomes)
-	{
-		return defaultGenerator.generateBlockSections(world, random, x, z, biomes);
 	}
 
 	private byte[] VoidGenerator()
@@ -190,6 +182,5 @@ public class PlotChunkGenerator extends ChunkGenerator
 	private StraightRoad straight;
 	private CrossRoads intersect;
 	private Mode mode;
-	private ChunkGenerator defaultGenerator;
 	private Biome biomeOverride = null;
 }
