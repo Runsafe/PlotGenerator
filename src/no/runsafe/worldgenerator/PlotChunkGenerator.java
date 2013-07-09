@@ -7,6 +7,7 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.RunsafeWorld;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -104,9 +105,14 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 				result = VoidGenerator();
 				break;
 			case DEFAULT:
-				if(biomeOverride != null)
-					biomes = new BiomeSupplier(biomeOverride.getRaw());
-				return dummy.getRaw().getGenerator().generateBlockSections(dummy.getRaw(), random, cx, cz, biomes);
+				dummy.getRaw().regenerateChunk(cx, cz);
+				Chunk chunk = dummy.getRaw().getChunkAt(cx, cz);
+				byte[][] blocks = new byte[8][4096];
+				for (int x = 0; x < 16; ++x)
+					for (int y = 0; y < 128; ++y)
+						for (int z = 0; z < 16; ++z)
+							blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (byte) chunk.getBlock(x, y, z).getType().getId();
+				return blocks;
 		}
 
 		byte[][] chunk = new byte[8][4096];
