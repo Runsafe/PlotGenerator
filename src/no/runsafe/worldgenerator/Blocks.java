@@ -1,9 +1,27 @@
 package no.runsafe.worldgenerator;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Material;
+
+import java.util.List;
 
 class Blocks
 {
+	public static List<Material> palette = Lists.newArrayList(
+		Material.AIR,
+		Material.BEDROCK,
+		Material.STONE,
+		Material.GRASS,
+		Material.DIRT,
+		Material.STEP,
+		Material.LOG,
+		Material.LEAVES,
+		Material.FENCE,
+		Material.TORCH,
+		Material.GLOWSTONE,
+		Material.WATER,
+		Material.DOUBLE_STEP
+	);
 	public static byte AIR = (byte) Material.AIR.getId();
 	public static byte BEDROCK = (byte) Material.BEDROCK.getId();
 	public static byte STONE = (byte) Material.STONE.getId();
