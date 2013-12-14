@@ -70,23 +70,23 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	private byte[] VoidGenerator()
 	{
 		byte result[] = new byte[32768];
-		Arrays.fill(result, Blocks.AIR);
+		Arrays.fill(result, (byte) Material.AIR.getId());
 		return result;
 	}
 
 	private byte[] FlatGenerator()
 	{
 		byte result[] = new byte[32768];
-		Arrays.fill(result, Blocks.AIR);
+		Arrays.fill(result, (byte) 0);
 		for (int x = 0; x < 16; ++x)
 		{
 			for (int z = 0; z < 16; ++z)
 			{
 				int offset = (x * 16 + z) * 128;
-				result[offset] = Blocks.BEDROCK;
-				Arrays.fill(result, offset + 1, offset + 60, Blocks.STONE);
-				Arrays.fill(result, offset + 60, offset + 63, Blocks.DIRT);
-				result[offset + 63] = Blocks.GRASS;
+				result[offset] = (byte) Material.BEDROCK.getId();
+				Arrays.fill(result, offset + 1, offset + 60, (byte) Material.STONE.getId());
+				Arrays.fill(result, offset + 60, offset + 63, (byte) Material.DIRT.getId());
+				result[offset + 63] = (byte) Material.GRASS.getId();
 			}
 		}
 		return result;
@@ -95,7 +95,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 	private byte[] NormalGenerator(int cx, int cz)
 	{
 		byte result[] = new byte[32768];
-		Arrays.fill(result, Blocks.AIR);
+		Arrays.fill(result, (byte) Material.AIR.getId());
 		boolean hRoad = cx % PLOT_SIZE == 0;
 		boolean vRoad = cz % PLOT_SIZE == 0;
 
@@ -104,9 +104,9 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 			for (int z = 0; z < 16; ++z)
 			{
 				int offset = (x * 16 + z) * 128;
-				result[offset] = Blocks.BEDROCK;
-				Arrays.fill(result, offset + 1, offset + 60, Blocks.STONE);
-				Arrays.fill(result, offset + 60, offset + 64, Blocks.DIRT);
+				result[offset] = (byte) Material.BEDROCK.getId();
+				Arrays.fill(result, offset + 1, offset + 60, (byte) Material.STONE.getId());
+				Arrays.fill(result, offset + 60, offset + 64, (byte) Material.DIRT.getId());
 
 				if (hRoad || vRoad)
 				{
@@ -114,16 +114,16 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 					{
 						byte what;
 						if (hRoad && vRoad)
-							what = intersect.getByte(x, y, z);
+							what = (byte) intersect.getMaterial(x, y, z, false).getId();
 
 						else
-							what = straight.getByte(x, y, z, hRoad);
+							what = (byte) straight.getMaterial(x, y, z, hRoad).getId();
 
 						result[offset + 62 + y] = what;
 					}
 				}
 				else
-					result[offset + 64] = Blocks.GRASS;
+					result[offset + 64] = (byte) Material.GRASS.getId();
 			}
 		}
 		return result;
