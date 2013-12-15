@@ -1,9 +1,5 @@
 package no.runsafe.worldgenerator;
 
-import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IServer;
-import no.runsafe.framework.api.IWorld;
-import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -12,7 +8,7 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.Arrays;
 import java.util.Random;
 
-public class PlotChunkGenerator extends ChunkGenerator implements IConfigurationChanged
+public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 {
 	final static int PLOT_SIZE = 3;
 
@@ -21,23 +17,17 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 		NORMAL, FLAT, VOID
 	}
 
-	public PlotChunkGenerator(IServer server)
+	public PlotChunkGenerator()
 	{
-		this.server = server;
 		mode = Mode.NORMAL;
 		straight = new StraightRoad();
 		intersect = new CrossRoads();
 	}
 
+	@Override
 	public void setMode(Mode generatorMode)
 	{
 		mode = generatorMode;
-	}
-
-	@Override
-	public void OnConfigurationChanged(IConfiguration configuration)
-	{
-		dummy = server.getWorld("dummy");
 	}
 
 	@Override
@@ -139,9 +129,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IConfiguration
 			return new Location(world, 0.0D, world.getHighestBlockYAt(0, 0), 0.0D);
 	}
 
-	private final IServer server;
 	private StraightRoad straight;
 	private CrossRoads intersect;
 	private Mode mode;
-	private IWorld dummy;
 }
