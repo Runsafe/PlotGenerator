@@ -11,7 +11,7 @@ public class Plugin extends RunsafePlugin
 	}
 
 	@Override
-	protected void PluginSetup()
+	protected void pluginSetup()
 	{
 		exportAPI(PlotChunkGenerator.class);
 	}
