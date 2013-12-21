@@ -1,5 +1,6 @@
 package no.runsafe.worldgenerator;
 
+import no.runsafe.worldgenerator.populators.IntersectionBuilder;
 import no.runsafe.worldgenerator.populators.StraightRoadBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,6 +40,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	{
 		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
 		populators.add(new StraightRoadBuilder());
+		populators.add(new IntersectionBuilder());
 		return populators;
 	}
 
