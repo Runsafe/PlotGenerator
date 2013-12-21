@@ -41,7 +41,7 @@ public class RoadBuilder extends BlockPopulator
 						case WATER:
 						case AIR:
 						case STEP:
-							if (x - X_FROM < 2 || X_TO - x < 2)
+							if (x - X_FROM < 2 || X_TO - x < 2 && y - Y_FROM < 3)
 								break;
 						default:
 							block.setType(crossection[(crossection.length - 1) - y + Y_FROM][x - X_FROM]);
