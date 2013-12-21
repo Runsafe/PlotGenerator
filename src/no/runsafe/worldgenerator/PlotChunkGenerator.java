@@ -1,6 +1,6 @@
 package no.runsafe.worldgenerator;
 
-import no.runsafe.worldgenerator.populator.BaselineGround;
+import no.runsafe.worldgenerator.populators.RoadBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 {
-	final static int PLOT_SIZE = 3;
+	public final static int PLOT_SIZE = 3;
 
 	public enum Mode
 	{
@@ -38,10 +38,10 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	public List<BlockPopulator> getDefaultPopulators(World world)
 	{
 		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
-		populators.add(new BaselineGround());
+		populators.add(new RoadBuilder());
 		return populators;
 	}
-/*
+
 	@Override
 	public byte[][] generateBlockSections(World world, Random random, int cx, int cz, BiomeGrid biomes)
 	{
@@ -68,7 +68,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 		return chunk;
 	}
-*/
+
 	private byte[] VoidGenerator()
 	{
 		byte result[] = new byte[32768];
@@ -110,7 +110,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 				Arrays.fill(result, offset + 1, offset + 60, (byte) Material.STONE.getId());
 				Arrays.fill(result, offset + 60, offset + 64, (byte) Material.DIRT.getId());
 
-				if (hRoad || vRoad)
+/*				if (hRoad || vRoad)
 				{
 					for (int y = 0; y < 6; ++y)
 					{
@@ -124,8 +124,8 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 						result[offset + 62 + y] = what;
 					}
 				}
-				else
-					result[offset + 64] = (byte) Material.GRASS.getId();
+				else*/
+				result[offset + 64] = (byte) Material.GRASS.getId();
 			}
 		}
 		return result;
