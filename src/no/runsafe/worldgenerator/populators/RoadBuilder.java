@@ -27,7 +27,7 @@ public class RoadBuilder extends BlockPopulator
 		int Z_TO = Z_FROM + 15;
 		for (int z = Z_FROM; z <= Z_TO; ++z)
 		{
-			Material[][] crossection = ((z + 5) % 8 == 0) ? crossectionlight : crossectionbase;
+			Material[][] crossection = ((z + 3) % 8 == 0) ? crossectionlight : crossectionbase;
 			int X_FROM = 6;
 			int X_TO = X_FROM + crossection[0].length - 1;
 			int Y_FROM = 62;
