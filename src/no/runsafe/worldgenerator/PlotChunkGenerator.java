@@ -1,6 +1,6 @@
 package no.runsafe.worldgenerator;
 
-import no.runsafe.worldgenerator.populators.RoadBuilder;
+import no.runsafe.worldgenerator.populators.StraightRoadBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,7 +38,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	public List<BlockPopulator> getDefaultPopulators(World world)
 	{
 		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
-		populators.add(new RoadBuilder());
+		populators.add(new StraightRoadBuilder());
 		return populators;
 	}
 

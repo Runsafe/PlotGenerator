@@ -9,15 +9,21 @@ import org.bukkit.generator.BlockPopulator;
 
 import java.util.Random;
 
-public class RoadBuilder extends BlockPopulator
+public class StraightRoadBuilder extends BlockPopulator
 {
 	@Override
 	public void populate(World world, Random random, Chunk chunk)
 	{
-		if (chunk.getX() % PlotChunkGenerator.PLOT_SIZE == 0)
+		boolean hRoad = chunk.getX() % PlotChunkGenerator.PLOT_SIZE == 0;
+		boolean vRoad = chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0;
+
+		if (vRoad == hRoad)
+			return;
+
+		if (hRoad)
 			apply(false, chunk);
 
-		if (chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0)
+		if (vRoad)
 			apply(true, chunk);
 	}
 
@@ -36,17 +42,7 @@ public class RoadBuilder extends BlockPopulator
 				for (int y = Y_FROM; y <= Y_TO; ++y)
 				{
 					Block block = chunk.getBlock(flip ? z : x, y, flip ? x : z);
-					switch (block.getType())
-					{
-						case WATER:
-						case AIR:
-						case STEP:
-							if ((x - X_FROM < 2 || X_TO - x < 2) && y - Y_FROM < 3)
-								break;
-						default:
-							block.setType(crossection[(crossection.length - 1) - y + Y_FROM][x - X_FROM]);
-							break;
-					}
+					block.setType(crossection[(crossection.length - 1) - y + Y_FROM][x - X_FROM]);
 				}
 		}
 	}
