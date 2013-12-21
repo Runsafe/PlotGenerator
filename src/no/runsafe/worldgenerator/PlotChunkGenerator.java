@@ -1,5 +1,6 @@
 package no.runsafe.worldgenerator;
 
+import com.google.common.collect.Lists;
 import no.runsafe.worldgenerator.populators.IntersectionBuilder;
 import no.runsafe.worldgenerator.populators.StraightRoadBuilder;
 import org.bukkit.Location;
@@ -25,8 +26,6 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	public PlotChunkGenerator()
 	{
 		mode = Mode.NORMAL;
-		straight = new StraightRoad();
-		intersect = new CrossRoads();
 	}
 
 	@Override
@@ -38,10 +37,14 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world)
 	{
-		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
-		populators.add(new StraightRoadBuilder());
-		populators.add(new IntersectionBuilder());
-		return populators;
+		if (mode == Mode.NORMAL)
+		{
+			List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+			populators.add(new StraightRoadBuilder());
+			populators.add(new IntersectionBuilder());
+			return populators;
+		}
+		return Lists.newArrayList();
 	}
 
 	@Override
@@ -52,7 +55,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 		switch (mode)
 		{
 			case NORMAL:
-				result = NormalGenerator(cx, cz);
+				result = NormalGenerator();
 				break;
 			case FLAT:
 				result = FlatGenerator();
@@ -96,12 +99,10 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 		return result;
 	}
 
-	private byte[] NormalGenerator(int cx, int cz)
+	private byte[] NormalGenerator()
 	{
 		byte result[] = new byte[32768];
 		Arrays.fill(result, (byte) Material.AIR.getId());
-		boolean hRoad = cx % PLOT_SIZE == 0;
-		boolean vRoad = cz % PLOT_SIZE == 0;
 
 		for (int x = 0; x < 16; ++x)
 		{
@@ -111,22 +112,6 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 				result[offset] = (byte) Material.BEDROCK.getId();
 				Arrays.fill(result, offset + 1, offset + 60, (byte) Material.STONE.getId());
 				Arrays.fill(result, offset + 60, offset + 64, (byte) Material.DIRT.getId());
-
-/*				if (hRoad || vRoad)
-				{
-					for (int y = 0; y < 6; ++y)
-					{
-						byte what;
-						if (hRoad && vRoad)
-							what = (byte) intersect.getMaterial(x, y, z, false).getId();
-
-						else
-							what = (byte) straight.getMaterial(x, y, z, hRoad).getId();
-
-						result[offset + 62 + y] = what;
-					}
-				}
-				else*/
 				result[offset + 64] = (byte) Material.GRASS.getId();
 			}
 		}
@@ -143,7 +128,5 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 			return new Location(world, 0.0D, world.getHighestBlockYAt(0, 0), 0.0D);
 	}
 
-	private StraightRoad straight;
-	private CrossRoads intersect;
 	private Mode mode;
 }
