@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+// Minecraft/Bukkit forces us to use deprecated APIs here..
+@SuppressWarnings("deprecation")
 public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 {
 	public final static int PLOT_SIZE = 3;
@@ -77,7 +79,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	private byte[] VoidGenerator()
 	{
 		byte result[] = new byte[32768];
-		Arrays.fill(result, (byte) Material.AIR.getId());
+		Arrays.fill(result, (byte) 0);
 		return result;
 	}
 
@@ -102,7 +104,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	private byte[] NormalGenerator()
 	{
 		byte result[] = new byte[32768];
-		Arrays.fill(result, (byte) Material.AIR.getId());
+		Arrays.fill(result, (byte) 0);
 
 		for (int x = 0; x < 16; ++x)
 		{
