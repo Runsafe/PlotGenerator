@@ -2,6 +2,7 @@ package no.runsafe.worldgenerator.populators;
 
 import no.runsafe.worldgenerator.PlotChunkGenerator;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -24,6 +25,9 @@ public class IntersectionBuilder extends Road
 		// First lay down the basic road
 		baseRoad(chunk, false);
 		baseRoad(chunk, true);
+
+		// Next, clean it up
+		cleanIntersection(chunk);
 	}
 
 	private void baseRoad(Chunk chunk, boolean flip)
@@ -42,9 +46,10 @@ public class IntersectionBuilder extends Road
 					Block block = chunk.getBlock(flip ? z : x, y, flip ? x : z);
 					switch (block.getType())
 					{
+						case STEP:
+							break;
 						case AIR:
 						case WATER:
-						case STEP:
 							if (y < 64 && (x - X_FROM < 2 || X_TO - x < 2))
 								break;
 						default:
@@ -52,5 +57,15 @@ public class IntersectionBuilder extends Road
 					}
 				}
 		}
+	}
+
+	private void cleanIntersection(Chunk chunk)
+	{
+		for(int x = 8; x <= 10; ++x)
+			for(int z = 0; z <= 15; ++z)
+			{
+				chunk.getBlock(x, 65, z).setType(Material.AIR);
+				chunk.getBlock(z, 65, x).setType(Material.AIR);
+			}
 	}
 }
