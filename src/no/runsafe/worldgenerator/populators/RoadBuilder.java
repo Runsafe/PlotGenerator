@@ -39,7 +39,8 @@ public class RoadBuilder extends BlockPopulator
 						case WATER:
 						case AIR:
 						case STEP:
-							break;
+							if(x - X_FROM < 2 || X_TO - x < 2)
+								break;
 						default:
 							block.setType(crossection[2 - y + Y_FROM][x - X_FROM]);
 							break;
@@ -48,7 +49,7 @@ public class RoadBuilder extends BlockPopulator
 	}
 
 	private final Material[][] crossection = new Material[][]{
-		{Material.STONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.STONE},
+		{Material.STONE, Material.AIR,   Material.STEP,  Material.STEP,  Material.STEP,  Material.AIR,   Material.STONE},
 		{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
 		{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE}
 	};
