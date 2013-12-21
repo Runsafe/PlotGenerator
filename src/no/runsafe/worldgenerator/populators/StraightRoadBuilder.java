@@ -10,9 +10,17 @@ import java.util.Random;
 
 public class StraightRoadBuilder extends Road
 {
+	public StraightRoadBuilder(PlotChunkGenerator generator)
+	{
+		super(generator);
+	}
+
 	@Override
 	public void populate(World world, Random random, Chunk chunk)
 	{
+		if (generator.getMode() != PlotChunkGenerator.Mode.NORMAL)
+			return;
+
 		boolean hRoad = chunk.getX() % PlotChunkGenerator.PLOT_SIZE == 0;
 		boolean vRoad = chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0;
 

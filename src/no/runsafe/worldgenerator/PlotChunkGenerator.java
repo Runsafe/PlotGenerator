@@ -1,6 +1,5 @@
 package no.runsafe.worldgenerator;
 
-import com.google.common.collect.Lists;
 import no.runsafe.worldgenerator.populators.IntersectionBuilder;
 import no.runsafe.worldgenerator.populators.StraightRoadBuilder;
 import org.bukkit.Location;
@@ -19,6 +18,11 @@ import java.util.Random;
 public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 {
 	public final static int PLOT_SIZE = 3;
+
+	public Mode getMode()
+	{
+		return mode;
+	}
 
 	public enum Mode
 	{
@@ -39,14 +43,10 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world)
 	{
-		if (mode == Mode.NORMAL)
-		{
-			List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
-			populators.add(new StraightRoadBuilder());
-			populators.add(new IntersectionBuilder());
-			return populators;
-		}
-		return Lists.newArrayList();
+		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+		populators.add(new StraightRoadBuilder(this));
+		populators.add(new IntersectionBuilder(this));
+		return populators;
 	}
 
 	@Override

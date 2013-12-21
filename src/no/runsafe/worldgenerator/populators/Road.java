@@ -1,10 +1,16 @@
 package no.runsafe.worldgenerator.populators;
 
+import no.runsafe.worldgenerator.PlotChunkGenerator;
 import org.bukkit.Material;
 import org.bukkit.generator.BlockPopulator;
 
 public abstract class Road extends BlockPopulator
 {
+	protected Road(PlotChunkGenerator generator)
+	{
+		this.generator = generator;
+	}
+
 	protected final Material[][] crossectionbase = new Material[][]{
 		{Material.STEP, Material.STEP, Material.AIR, Material.AIR, Material.AIR, Material.STEP, Material.STEP},
 		{Material.STONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.STONE},
@@ -19,4 +25,6 @@ public abstract class Road extends BlockPopulator
 		{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
 		{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE}
 	};
+
+	protected PlotChunkGenerator generator;
 }
