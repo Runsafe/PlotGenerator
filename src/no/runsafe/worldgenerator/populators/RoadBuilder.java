@@ -37,7 +37,7 @@ public class RoadBuilder extends BlockPopulator
 					switch (block.getType())
 					{
 						case WATER:
-						case AIR:
+//						case AIR:
 						case STEP:
 							break;
 						default:
