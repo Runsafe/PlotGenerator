@@ -45,7 +45,8 @@ public class IntersectionBuilder extends Road
 						case AIR:
 						case WATER:
 						case STEP:
-							break;
+							if (y < 64 && (x - X_FROM < 2 || X_TO - x < 2))
+								break;
 						default:
 							block.setType(crossectionbase[(crossectionbase.length - 1) - y + Y_FROM][x - X_FROM]);
 					}
