@@ -44,7 +44,7 @@ public class RoadBuilder extends BlockPopulator
 							if (x - X_FROM < 2 || X_TO - x < 2)
 								break;
 						default:
-							block.setType(crossection[2 - y + Y_FROM][x - X_FROM]);
+							block.setType(crossection[(crossection.length - 1) - y + Y_FROM][x - X_FROM]);
 							break;
 					}
 				}
