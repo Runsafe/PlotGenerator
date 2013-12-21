@@ -25,12 +25,12 @@ public class RoadBuilder extends BlockPopulator
 		for (int x = 7; x <= 13; ++x)
 			for (int y = 62; y <= 64; ++y)
 				for (int z = 1; z <= 16; ++z)
-					chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[y - 62][x - 7]);
+					chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[2 - y + 62][x - 7]);
 	}
 
 
 	private final Material[][] crossection = new Material[][]{
-		{Material.STONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.STONE},
+		{Material.STONE, Material.AIR,   Material.STEP,  Material.STEP,  Material.STEP,  Material.AIR,   Material.STONE},
 		{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
 		{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE}
 	};
