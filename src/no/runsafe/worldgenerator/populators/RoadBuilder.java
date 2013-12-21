@@ -31,7 +31,18 @@ public class RoadBuilder extends BlockPopulator
 		for (int x = X_FROM; x <= X_TO; ++x)
 			for (int y = Y_FROM; y <= Y_TO; ++y)
 				for (int z = Z_FROM; z <= Z_TO; ++z)
-					chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[2 - y + Y_FROM][x - X_FROM]);
+				{
+					switch (chunk.getBlock(flip ? z : x, y, flip ? x : z).getType())
+					{
+						case WATER:
+						case AIR:
+						case STEP:
+							break;
+						default:
+							chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[2 - y + Y_FROM][x - X_FROM]);
+							break;
+					}
+				}
 	}
 
 	private final Material[][] crossection = new Material[][]{
