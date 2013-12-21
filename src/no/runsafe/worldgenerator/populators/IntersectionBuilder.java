@@ -26,7 +26,7 @@ public class IntersectionBuilder extends Road
 		baseRoad(chunk, false);
 		baseRoad(chunk, true);
 
-		// Next, clean it up
+		// Next, build the center
 		cleanIntersection(chunk);
 	}
 
@@ -61,11 +61,73 @@ public class IntersectionBuilder extends Road
 
 	private void cleanIntersection(Chunk chunk)
 	{
-		for(int x = 8; x <= 10; ++x)
-			for(int z = 0; z <= 15; ++z)
-			{
-				chunk.getBlock(x, 65, z).setType(Material.AIR);
-				chunk.getBlock(z, 65, x).setType(Material.AIR);
-			}
+		int Y_FROM = 62;
+		int Y_TO = Y_FROM + intersection.length - 1;
+		int Z_FROM = 6;
+		int Z_TO = Z_FROM + intersection[0].length - 1;
+		int X_FROM = 6;
+		int X_TO = X_FROM + intersection[0][0].length - 1;
+
+		for (int x = X_FROM; x <= X_TO; ++x)
+			for (int y = Y_FROM; y <= Y_TO; ++y)
+				for (int z = Z_FROM; z <= Z_TO; ++z)
+					chunk.getBlock(x, y, z).setType(intersection[(intersection.length - 1) - y + Y_FROM][z - Z_FROM][x - X_FROM]);
 	}
+
+	private final Material[][][] intersection = new Material[][][]{
+		{
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.TORCH, Material.AIR, Material.AIR, Material.AIR, Material.TORCH, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.TORCH, Material.AIR, Material.AIR, Material.AIR, Material.TORCH, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR}
+		},
+		{
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.FENCE, Material.AIR, Material.AIR, Material.AIR, Material.FENCE, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.FENCE, Material.AIR, Material.AIR, Material.AIR, Material.FENCE, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR}
+		},
+		{
+			{Material.STEP, Material.STEP, Material.AIR, Material.AIR, Material.AIR, Material.STEP, Material.STEP},
+			{Material.STEP, Material.DOUBLE_STEP, Material.AIR, Material.AIR, Material.AIR, Material.DOUBLE_STEP, Material.STEP},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR, Material.AIR},
+			{Material.STEP, Material.DOUBLE_STEP, Material.AIR, Material.AIR, Material.AIR, Material.DOUBLE_STEP, Material.STEP},
+			{Material.STEP, Material.STEP, Material.AIR, Material.AIR, Material.AIR, Material.STEP, Material.STEP},
+		},
+		{
+			{Material.GLOWSTONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.GLOWSTONE},
+			{Material.AIR, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.AIR},
+			{Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP},
+			{Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP},
+			{Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP, Material.STEP},
+			{Material.AIR, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.AIR},
+			{Material.GLOWSTONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.GLOWSTONE},
+		},
+		{
+			{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
+			{Material.WATER, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.WATER},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.WATER, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.WATER},
+			{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
+		},
+		{
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+			{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE},
+		},
+	};
 }
