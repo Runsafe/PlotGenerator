@@ -1,11 +1,15 @@
 package no.runsafe.worldgenerator;
 
+import no.runsafe.worldgenerator.populator.BaselineGround;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
@@ -30,6 +34,14 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 		mode = generatorMode;
 	}
 
+	@Override
+	public List<BlockPopulator> getDefaultPopulators(World world)
+	{
+		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+		populators.add(new BaselineGround());
+		return populators;
+	}
+/*
 	@Override
 	public byte[][] generateBlockSections(World world, Random random, int cx, int cz, BiomeGrid biomes)
 	{
@@ -56,7 +68,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 		return chunk;
 	}
-
+*/
 	private byte[] VoidGenerator()
 	{
 		byte result[] = new byte[32768];
