@@ -13,24 +13,29 @@ public class RoadBuilder extends BlockPopulator
 	@Override
 	public void populate(World world, Random random, Chunk chunk)
 	{
-		if(chunk.getX() % PlotChunkGenerator.PLOT_SIZE == 0)
+		if (chunk.getX() % PlotChunkGenerator.PLOT_SIZE == 0)
 			apply(false, chunk);
 
-		if(chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0)
+		if (chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0)
 			apply(true, chunk);
 	}
 
 	private void apply(boolean flip, Chunk chunk)
 	{
-		for (int x = 7; x <= 13; ++x)
-			for (int y = 62; y <= 64; ++y)
-				for (int z = 1; z <= 16; ++z)
-					chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[2 - y + 62][x - 7]);
+		int X_FROM = 6;
+		int X_TO = X_FROM + crossection[0].length - 1;
+		int Y_FROM = 62;
+		int Y_TO = X_FROM + crossection.length - 1;
+		int Z_FROM = 0;
+		int Z_TO = Z_FROM + 15;
+		for (int x = X_FROM; x <= X_TO; ++x)
+			for (int y = Y_FROM; y <= Y_TO; ++y)
+				for (int z = Z_FROM; z <= Z_TO; ++z)
+					chunk.getBlock(flip ? z : x, y, flip ? x : z).setType(crossection[2 - y + Y_FROM][x - X_FROM]);
 	}
 
-
 	private final Material[][] crossection = new Material[][]{
-		{Material.STONE, Material.AIR,   Material.STEP,  Material.STEP,  Material.STEP,  Material.AIR,   Material.STONE},
+		{Material.STONE, Material.AIR, Material.STEP, Material.STEP, Material.STEP, Material.AIR, Material.STONE},
 		{Material.STONE, Material.WATER, Material.STONE, Material.STONE, Material.STONE, Material.WATER, Material.STONE},
 		{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE}
 	};
