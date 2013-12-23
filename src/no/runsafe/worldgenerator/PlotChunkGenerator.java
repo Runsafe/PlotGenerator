@@ -27,7 +27,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 	public enum Mode
 	{
-		NORMAL, FLAT, VOID
+		NORMAL, FLAT, VOID, GRID
 	}
 
 	public PlotChunkGenerator()
@@ -67,6 +67,8 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 			case VOID:
 				result = VoidGenerator();
 				break;
+			case GRID:
+				result = GridGenerator();
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -76,6 +78,22 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 					chunk[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = result[(x * 16 + z) * 128 + y];
 
 		return chunk;
+	}
+
+	private byte[] GridGenerator()
+	{
+		byte result[] = new byte[32768];
+		Arrays.fill(result, (byte) 0);
+		for (int x = 0; x < 16; ++x)
+		{
+			for (int z = 0; z < 16; ++z)
+			{
+				int offset = (x * 16 + z) * 128;
+				result[offset] = (byte) Material.BEDROCK.getId();
+				result[offset + 63] = (byte) ((x % 10 == 0 || z % 10 == 0) ? Material.COAL_BLOCK.getId() : Material.QUARTZ_BLOCK.getId());
+			}
+		}
+		return result;
 	}
 
 	private byte[] VoidGenerator()
