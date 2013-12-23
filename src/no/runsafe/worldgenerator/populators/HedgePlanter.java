@@ -25,10 +25,10 @@ public class HedgePlanter extends BlockPopulator
 		boolean vRoad = chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0;
 
 		if (hRoad)
-			plant(chunk, true);
+			plant(chunk, false);
 
 		if (vRoad)
-			plant(chunk, false);
+			plant(chunk, true);
 	}
 
 	private void plant(Chunk chunk, boolean rotate)
