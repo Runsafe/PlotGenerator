@@ -93,7 +93,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 				result[offset] = (byte) Material.BEDROCK.getId();
 				result[offset + 63] = (byte) Material.GRASS.getId();
 				if (x % 8 == 0 || z % 8 == 0)
-					result[offset + 64] = (byte) Material.RED_ROSE.getId();
+					result[offset + 64] = (byte) Material.STEP.getId();
 			}
 		}
 		return result;
