@@ -69,6 +69,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 				break;
 			case GRID:
 				result = GridGenerator();
+				break;
 		}
 
 		byte[][] chunk = new byte[8][4096];
@@ -90,7 +91,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 			{
 				int offset = (x * 16 + z) * 128;
 				result[offset] = (byte) Material.BEDROCK.getId();
-				result[offset + 63] = (byte) ((x % 10 == 0 || z % 10 == 0) ? Material.COAL_BLOCK.getId() : Material.QUARTZ_BLOCK.getId());
+				result[offset + 63] = (byte) ((x % 8 == 0 || z % 8 == 0) ? Material.QUARTZ_BLOCK.getId() : Material.GRASS.getId());
 			}
 		}
 		return result;
