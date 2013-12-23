@@ -25,13 +25,13 @@ public class HedgePlanter extends BlockPopulator
 		boolean vRoad = chunk.getZ() % PlotChunkGenerator.PLOT_SIZE == 0;
 
 		if (hRoad)
-			plant(chunk, false);
+			plant(chunk, false, vRoad);
 
 		if (vRoad)
-			plant(chunk, true);
+			plant(chunk, true, hRoad);
 	}
 
-	private void plant(Chunk chunk, boolean rotate)
+	private void plant(Chunk chunk, boolean rotate, boolean intersection)
 	{
 		int Z_FROM = 0;
 		int Z_TO = Z_FROM + 15;
@@ -39,9 +39,12 @@ public class HedgePlanter extends BlockPopulator
 		for (int x : X_VALUES)
 			for (int z = Z_FROM; z <= Z_TO; ++z)
 			{
-				chunk.getBlock(rotate ? z : x, 66, rotate ? x : z).setType(Material.LEAVES);
-				chunk.getBlock(rotate ? z : x, 65, rotate ? x : z).setType(Material.LEAVES);
-				chunk.getBlock(rotate ? z : x, 64, rotate ? x : z).setType(Material.LOG);
+				if (!intersection || z < 6 || z > 12)
+				{
+					chunk.getBlock(rotate ? z : x, 66, rotate ? x : z).setType(Material.LEAVES);
+					chunk.getBlock(rotate ? z : x, 65, rotate ? x : z).setType(Material.LEAVES);
+					chunk.getBlock(rotate ? z : x, 64, rotate ? x : z).setType(Material.LOG);
+				}
 			}
 	}
 
