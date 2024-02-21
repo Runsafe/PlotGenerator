@@ -44,7 +44,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world)
 	{
-		List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+		List<BlockPopulator> populators = new ArrayList<>();
 		populators.add(new HedgePlanter(this));
 		populators.add(new StraightRoadBuilder(this));
 		populators.add(new IntersectionBuilder(this));
@@ -83,7 +83,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 	private byte[] GridGenerator()
 	{
-		byte result[] = new byte[32768];
+		byte[] result = new byte[32768];
 		Arrays.fill(result, (byte) 0);
 		for (int x = 0; x < 16; ++x)
 		{
@@ -102,14 +102,14 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 	private byte[] VoidGenerator()
 	{
-		byte result[] = new byte[32768];
+		byte[] result = new byte[32768];
 		Arrays.fill(result, (byte) 0);
 		return result;
 	}
 
 	private byte[] FlatGenerator()
 	{
-		byte result[] = new byte[32768];
+		byte[] result = new byte[32768];
 		Arrays.fill(result, (byte) 0);
 		for (int x = 0; x < 16; ++x)
 		{
@@ -127,7 +127,7 @@ public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 
 	private byte[] NormalGenerator()
 	{
-		byte result[] = new byte[32768];
+		byte[] result = new byte[32768];
 		Arrays.fill(result, (byte) 0);
 
 		for (int x = 0; x < 16; ++x)

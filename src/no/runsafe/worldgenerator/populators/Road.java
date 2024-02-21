@@ -26,5 +26,5 @@ public abstract class Road extends BlockPopulator
 		{Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE}
 	};
 
-	protected PlotChunkGenerator generator;
+	protected final PlotChunkGenerator generator;
 }
