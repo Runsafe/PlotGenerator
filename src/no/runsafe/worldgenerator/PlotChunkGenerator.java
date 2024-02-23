@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-// Minecraft/Bukkit forces us to use deprecated APIs here..
+// Minecraft/Bukkit forces us to use deprecated APIs here...
 @SuppressWarnings("deprecation")
 public class PlotChunkGenerator extends ChunkGenerator implements IPlotGenerator
 {

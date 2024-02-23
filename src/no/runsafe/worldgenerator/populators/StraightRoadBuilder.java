@@ -40,16 +40,16 @@ public class StraightRoadBuilder extends Road
 		int Z_TO = Z_FROM + 15;
 		for (int z = Z_FROM; z <= Z_TO; ++z)
 		{
-			Material[][] crossection = ((z + 3) % 8 == 0) ? crossectionlight : crossectionbase;
+			Material[][] crossSection = ((z + 3) % 8 == 0) ? crossSectionLight : crossSectionBase;
 			int X_FROM = 6;
-			int X_TO = X_FROM + crossection[0].length - 1;
+			int X_TO = X_FROM + crossSection[0].length - 1;
 			int Y_FROM = 62;
-			int Y_TO = Y_FROM + crossection.length - 1;
+			int Y_TO = Y_FROM + crossSection.length - 1;
 			for (int x = X_FROM; x <= X_TO; ++x)
 				for (int y = Y_FROM; y <= Y_TO; ++y)
 				{
 					Block block = chunk.getBlock(flip ? z : x, y, flip ? x : z);
-					block.setType(crossection[(crossection.length - 1) - y + Y_FROM][x - X_FROM]);
+					block.setType(crossSection[(crossSection.length - 1) - y + Y_FROM][x - X_FROM]);
 				}
 		}
 	}

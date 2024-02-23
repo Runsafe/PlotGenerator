@@ -45,9 +45,9 @@ public class IntersectionBuilder extends Road
 		for (int z = Z_FROM; z <= Z_TO; ++z)
 		{
 			int X_FROM = 6;
-			int X_TO = X_FROM + crossectionbase[0].length - 1;
+			int X_TO = X_FROM + crossSectionBase[0].length - 1;
 			int Y_FROM = 62;
-			int Y_TO = Y_FROM + crossectionbase.length - 1;
+			int Y_TO = Y_FROM + crossSectionBase.length - 1;
 			for (int x = X_FROM; x <= X_TO; ++x)
 				for (int y = Y_FROM; y <= Y_TO; ++y)
 				{
@@ -61,7 +61,7 @@ public class IntersectionBuilder extends Road
 							if (y < 64 && (x - X_FROM < 2 || X_TO - x < 2))
 								break;
 						default:
-							block.setType(crossectionbase[(crossectionbase.length - 1) - y + Y_FROM][x - X_FROM]);
+							block.setType(crossSectionBase[(crossSectionBase.length - 1) - y + Y_FROM][x - X_FROM]);
 					}
 				}
 		}
